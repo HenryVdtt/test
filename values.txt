@@ -1,0 +1,65 @@
+-- Sexo
+
+local Lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/7yhx/kwargs_Ui_Library/main/source.lua"))()
+
+local UI = Lib:Create{
+    Theme = "Dark", -- or any other theme
+    Size = UDim2.new(0, 555, 0, 400) -- default
+ }
+ 
+ local Main = UI:Tab{
+    Name = "Começo"
+ }
+ 
+ local Divider = Main:Divider{
+    Name = "Inicio shit"
+ }
+ 
+ local QuitDivider = Main:Divider{
+    Name = "Sair"
+ }
+
+ -- Script para adicionar itens ao inventário de um jogador ao pressionar a tecla 'P'
+
+-- Função para adicionar itens
+function adicionarItens(jogador, item, quantidade)
+    -- Verifica se o jogador tem um inventário
+    if jogador:FindFirstChild("Inventario") then
+        local inventario = jogador.Inventario
+
+        -- Verifica se o item já existe no inventário
+        if inventario:FindFirstChild(item) then
+            -- Adiciona a quantidade ao item existente
+            inventario[item].Valor.Value = inventario[item].Valor.Value + quantidade
+        else
+            -- Cria um novo item no inventário
+            local novoItem = Instance.new("IntValue")
+            novoItem.Name = item
+            novoItem.Value = quantidade
+            novoItem.Parent = inventario
+        end
+    else
+        -- Cria um inventário para o jogador se não existir
+        local inventario = Instance.new("Folder")
+        inventario.Name = "Inventario"
+        inventario.Parent = jogador
+
+        -- Adiciona o item ao novo inventário
+        local novoItem = Instance.new("IntValue")
+        novoItem.Name = item
+        novoItem.Value = quantidade
+        novoItem.Parent = inventario
+    end
+end
+
+-- Função para detectar a tecla pressionada
+function onKeyPress(input, gameProcessed)
+    if input.KeyCode == Enum.KeyCode.P then
+        local jogador = game.Players.LocalPlayer
+        local itemSelecionado = "Pocao" -- Substitua pelo item selecionado no inventário
+        adicionarItens(jogador, itemSelecionado, 5)
+    end
+end
+
+-- Conecta a função de tecla pressionada ao evento de entrada do usuário
+game:GetService("UserInputService").InputBegan:Connect(onKeyPress)
