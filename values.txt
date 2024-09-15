@@ -56,7 +56,7 @@ end
 function onKeyPress(input, gameProcessed)
     if input.KeyCode == Enum.KeyCode.P then
         local jogador = game.Players.LocalPlayer
-        local itemSelecionado = "Pocao" -- Substitua pelo item selecionado no inventário
+        local itemSelecionado = "Milkshake" -- Substitua pelo item selecionado no inventário
         adicionarItens(jogador, itemSelecionado, 5)
     end
 end
